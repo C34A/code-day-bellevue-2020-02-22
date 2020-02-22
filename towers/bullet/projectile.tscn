@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://towers/bullet/projectile.obj" type="ArrayMesh" id=1]
+[ext_resource path="res://towers/bullet/projectile.gd" type="Script" id=2]
+
+[sub_resource type="SpatialMaterial" id=1]
+albedo_color = Color( 0.133333, 0.0666667, 0.054902, 1 )
+emission_enabled = true
+emission = Color( 1, 0.984314, 0, 1 )
+emission_energy = 4.22
+emission_operator = 0
+emission_on_uv2 = false
+
+[sub_resource type="CapsuleShape" id=2]
+radius = 0.07
+height = 0.15
+
+[node name="bullet" type="KinematicBody"]
+script = ExtResource( 2 )
+
+[node name="projectile" type="MeshInstance" parent="."]
+mesh = ExtResource( 1 )
+material/0 = SubResource( 1 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 2 )

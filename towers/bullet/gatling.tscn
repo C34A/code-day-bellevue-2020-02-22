@@ -1,0 +1,10 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://towers/bullet/gatling.dae" type="PackedScene" id=1]
+[ext_resource path="res://towers/bullet/gatling.gd" type="Script" id=2]
+
+[node name="gatling" instance=ExtResource( 1 )]
+script = ExtResource( 2 )
+
+[node name="barrels" parent="tower/top" index="0"]
+transform = Transform( 0.343522, 0, -6.00633e-08, -6.00633e-08, 0, -0.343522, 0, 0.234195, 0, 2.14353e-08, 1.54672, 0.0471159 )

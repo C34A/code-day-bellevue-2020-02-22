@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/projectile.obj-ebe25215aa415aa4ec1c39f9c7f1a328.mesh"
+
+[deps]
+
+files=[ "res://.import/projectile.obj-ebe25215aa415aa4ec1c39f9c7f1a328.mesh" ]
+
+source_file="res://towers/bullet/projectile.obj"
+dest_files=[ "res://.import/projectile.obj-ebe25215aa415aa4ec1c39f9c7f1a328.mesh", "res://.import/projectile.obj-ebe25215aa415aa4ec1c39f9c7f1a328.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

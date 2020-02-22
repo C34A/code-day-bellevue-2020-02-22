@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://towers/bullet/gatling.tscn" type="PackedScene" id=1]
+
+[node name="Spatial" type="Spatial"]
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 0.707107, -0.414098, 0.573169, 0, 0.810584, 0.585623, -0.707107, -0.414098, 0.573169, 2.489, 3.492, 2.767 )
+
+[node name="gatling" parent="." instance=ExtResource( 1 )]
