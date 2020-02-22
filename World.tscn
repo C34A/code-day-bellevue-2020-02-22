@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=2]
+[gd_scene load_steps=6 format=2]
 
 [ext_resource path="res://scripts/Towers.gd" type="Script" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
@@ -40,8 +40,6 @@ nodes/fragment/connections = PoolIntArray( 2, 0, 0, 1 )
 [sub_resource type="ShaderMaterial" id=3]
 shader = SubResource( 2 )
 
-[sub_resource type="PlaneShape" id=4]
-
 [node name="World" type="Spatial"]
 
 [node name="Towers" type="Spatial" parent="."]
@@ -58,6 +56,3 @@ transform = Transform( 0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0
 [node name="GhostTower" type="CSGSphere" parent="Player"]
 visible = false
 material = SubResource( 3 )
-
-[node name="Plane" type="CollisionShape" parent="Player"]
-shape = SubResource( 4 )
