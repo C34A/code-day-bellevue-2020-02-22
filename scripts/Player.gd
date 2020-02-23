@@ -23,7 +23,10 @@ func _process(delta: float):
 		if placing_tower:
 			ghost_tower = Gatling.instance();
 			add_child(ghost_tower);
+			ghost_tower.global_transform.basis = Basis();
 			ghost_tower.make_ghost();
+			ghost_tower.collision_layer = 2;
+			ghost_tower.collision_mask = 0;
 			_update_ghost_position();
 		else:
 			ghost_tower.queue_free();
