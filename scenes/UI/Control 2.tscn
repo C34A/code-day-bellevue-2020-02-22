@@ -1,0 +1,94 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://scenes/UI/Zian-7vO4.ttf" type="DynamicFontData" id=1]
+[ext_resource path="res://scenes/UI/main-menu.gd" type="Script" id=2]
+
+[sub_resource type="DynamicFont" id=1]
+size = 62
+font_data = ExtResource( 1 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 64
+font_data = ExtResource( 1 )
+
+[sub_resource type="ProxyTexture" id=3]
+
+[node name="Main Menu" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 0.670822
+margin_right = 0.670776
+rect_pivot_offset = Vector2( 219.456, 222.511 )
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Black Background" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Game Title" type="Label" parent="."]
+margin_left = 195.729
+margin_top = 13.3771
+margin_right = 868.729
+margin_bottom = 78.3771
+custom_fonts/font = SubResource( 1 )
+text = "paradox defense"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="."]
+margin_left = 311.0
+margin_top = 105.0
+margin_right = 734.0
+margin_bottom = 201.0
+custom_fonts/font = SubResource( 2 )
+text = "start"
+icon = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button2" type="Button" parent="."]
+margin_left = 312.565
+margin_top = 468.089
+margin_right = 735.565
+margin_bottom = 564.089
+custom_fonts/font = SubResource( 2 )
+text = "quit"
+icon = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button3" type="Button" parent="."]
+margin_left = 312.13
+margin_top = 346.994
+margin_right = 735.13
+margin_bottom = 442.994
+custom_fonts/font = SubResource( 2 )
+text = "credits"
+icon = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button4" type="Button" parent="."]
+margin_left = 311.782
+margin_top = 226.0
+margin_right = 734.782
+margin_bottom = 322.0
+custom_fonts/font = SubResource( 2 )
+text = "options"
+icon = SubResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="pressed" from="Button" to="." method="_on_Button_pressed"]
+[connection signal="pressed" from="Button4" to="." method="_on_Button4_pressed"]
