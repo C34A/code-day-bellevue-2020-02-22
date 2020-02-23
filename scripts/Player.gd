@@ -60,7 +60,12 @@ func _process(delta: float):
 			get_tree().paused = true;
 		else:
 			get_tree().paused = false;
-			
+	
+	if Input.is_action_just_pressed("ui_cancel"):
+		$Control.hide()
+		$Control2.show()
+		get_tree().paused = true
+	
 	var health = get_node("../Towers/base").health
 	$Control/Label.text = "Base Health:  " + String(round(health))
 
@@ -99,3 +104,9 @@ func _update_ghost_position():
 		can_place_tower = false;
 		ghost_tower.make_ghost_collision();
 	ghost_tower.global_transform.origin = position;
+
+
+func _on_Button_pressed():
+	$Control2.hide()
+	$Control.show()
+	get_tree().paused = false

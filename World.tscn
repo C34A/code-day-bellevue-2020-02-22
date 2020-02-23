@@ -1,9 +1,18 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=17 format=2]
 
 [ext_resource path="res://scripts/Towers.gd" type="Script" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
 [ext_resource path="res://resources/towers/warp/albedo.png" type="Texture" id=3]
+[ext_resource path="res://resources/Audiowide-Regular.ttf" type="DynamicFontData" id=4]
 [ext_resource path="res://scripts/Enemies.gd" type="Script" id=5]
+
+[sub_resource type="DynamicFont" id=10]
+size = 70
+font_data = ExtResource( 4 )
+
+[sub_resource type="DynamicFont" id=11]
+size = 30
+font_data = ExtResource( 4 )
 
 [sub_resource type="VisualShaderNodeScalarConstant" id=1]
 
@@ -137,6 +146,39 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="Control2" type="Control" parent="Player"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="Player/Control2"]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -247.0
+margin_right = 248.0
+margin_bottom = 91.0
+custom_fonts/font = SubResource( 10 )
+text = "PAUSED"
+align = 1
+
+[node name="Button" type="Button" parent="Player/Control2"]
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+margin_left = -142.5
+margin_top = -52.0
+margin_right = 142.5
+margin_bottom = 52.0
+custom_fonts/font = SubResource( 11 )
+text = "unpause"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.0159864, 0.999872, 0, -0.999872, 0.0159864, 0, 2.33959, 8.55439 )
 
@@ -149,3 +191,4 @@ width = 80.0
 height = 0.1
 depth = 80.0
 material = SubResource( 9 )
+[connection signal="pressed" from="Player/Control2/Button" to="Player" method="_on_Button_pressed"]
