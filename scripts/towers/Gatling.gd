@@ -52,6 +52,8 @@ func _process(delta):
 		
 		if spawn_bullets:
 			if shot_cooldown <= 0:
+				$Sound.pitch_scale = time_scale;
+				$Sound.play();
 				var projectile = bullet_scene.instance()
 				get_node("../..").add_child(projectile)
 				projectile.global_transform = bullet_point.global_transform

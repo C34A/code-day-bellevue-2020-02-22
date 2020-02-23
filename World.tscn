@@ -15,6 +15,7 @@ size = 30
 font_data = ExtResource( 4 )
 
 [sub_resource type="DynamicFont" id=3]
+size = 48
 font_data = ExtResource( 4 )
 
 [sub_resource type="Shader" id=4]
@@ -177,6 +178,26 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
+[node name="TimeBar" type="ColorRect" parent="Player/Control"]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = -23.0
+margin_bottom = -115.0
+color = Color( 0, 0, 0, 1 )
+
+[node name="Rect" type="ColorRect" parent="Player/Control/TimeBar"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = 3.62158
+margin_right = -3.0
+margin_bottom = -2.37842
+color = Color( 0.996078, 0.682353, 1, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
 [node name="DirectionalLight" type="DirectionalLight" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.0159864, 0.999872, 0, -0.999872, 0.0159864, 0, 2.33959, 8.55439 )
 
@@ -185,6 +206,7 @@ transform = Transform( -0.99689, -0.00125984, -0.0787969, 0.078807, -0.0159367, 
 
 [node name="CSGBox" type="CSGBox" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0 )
+visible = false
 width = 500.0
 height = 0.8
 depth = 500.0

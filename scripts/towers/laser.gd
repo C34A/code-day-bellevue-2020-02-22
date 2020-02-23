@@ -73,6 +73,8 @@ func _process(delta):
 			else:
 				shot_cooldown -= delta
 			if shot_cooldown < 0.7 and not cast_yet:
+				$Sound.pitch_scale = time_scale;
+				$Sound.play();
 				cast_yet = true;
 				var collider = raycast.get_collider();
 				if collider:
