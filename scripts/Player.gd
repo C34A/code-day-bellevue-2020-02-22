@@ -62,6 +62,12 @@ func _process(delta: float):
 		else:
 			get_tree().paused = false;
 	
+	if placing_tower:
+		$Control/TimeBar/Rect.visible = true;
+		$Control/TimeBar/Rect.anchor_top = float(placing_tower_4d_offset) / -towers.action_history.size();
+	else:
+		$Control/TimeBar/Rect.visible = false;
+		
 	if Input.is_action_just_pressed("ui_cancel"):
 		$Control.hide()
 		get_node("../Control2").show()

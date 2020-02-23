@@ -81,7 +81,6 @@ func _process(delta):
 	set_transform(Transform(thisRot, transform.origin))
 	
 	var rot_dist = rotation - start_deg;
-	print(rot_dist)
 	
 	rotate_x(rot_dist.y)
 	

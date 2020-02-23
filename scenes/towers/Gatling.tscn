@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://resources/towers/Gatling/Material_001.material" type="Material" id=1]
 [ext_resource path="res://scripts/towers/Gatling.gd" type="Script" id=2]
@@ -7,6 +7,7 @@
 [ext_resource path="res://resources/towers/Gatling/darker.material" type="Material" id=5]
 [ext_resource path="res://resources/towers/Gatling/base.material" type="Material" id=6]
 [ext_resource path="res://resources/towers/base/base.material" type="Material" id=7]
+[ext_resource path="res://resources/sfx/gatling.wav" type="AudioStream" id=8]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Cube.001"
@@ -130,3 +131,7 @@ anims/default = SubResource( 5 )
 [node name="CollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0 )
 shape = SubResource( 6 )
+
+[node name="Sound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 8 )
+volume_db = -15.146
