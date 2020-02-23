@@ -32,8 +32,18 @@ func _process(delta):
 #		print(target_point)
 #		print(target_angle)
 		
+		while(target_angle > (2*PI)):
+			target_angle -= 2*PI
+		while(target_angle < 0):
+			target_angle += 2*PI
+		var turret_rot = turret_top.global_transform.basis.get_euler().y
+		while(turret_rot > (2*PI)):
+			turret_rot -= 2*PI
+		while(turret_rot < 0):
+			turret_rot += 2*PI
+		
 	#	$tower/top.global_transform.basis = $tower/top.global_transform.basis.rotated(Vector3.UP, ROTSPEED * delta)
-		$tower/top.rotate_y(ROTSPEED * delta * sign(target_angle - turret_top.global_transform.basis.get_euler().y))
+		$tower/top.rotate_y(ROTSPEED * delta * sign(target_angle - turret_rot))
 		
 		if spawn_bullets:
 			if shot_cooldown <= 0:

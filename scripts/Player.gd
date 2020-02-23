@@ -9,6 +9,7 @@ onready var towers = get_node("../Towers");
 
 const Base = preload("res://scenes/towers/base/base.tscn");
 const Gatling = preload("res://scenes/towers/Gatling.tscn");
+#const Gatling = preload("res://scenes/towers/laser/laser.tscn")
 
 var mouse_down: bool = false;
 var placing_tower: bool = false;
