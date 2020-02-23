@@ -65,10 +65,7 @@ func _physics_process(delta):
 		var dist = global_transform.origin.distance_squared_to(e.global_transform.origin)
 		if dist < targetEnemyDist:
 			targetEnemyDist = dist
-			targetEnemy = e
-	
-#	print(targetEnemyDist)
-	
+			targetEnemy = e	
 	
 	if targetEnemyDist < RANGE:
 		disabled = false
