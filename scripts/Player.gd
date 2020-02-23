@@ -20,7 +20,7 @@ var tower_type: PackedScene;
 var placing_tower_4d_offset: int = 0;
 
 func _ready():
-	pass
+	get_node("../Control2").pause_mode = Node.PAUSE_MODE_PROCESS
 	
 func _process(delta: float):
 	var place_pressed = false;
@@ -63,8 +63,9 @@ func _process(delta: float):
 	
 	if Input.is_action_just_pressed("ui_cancel"):
 		$Control.hide()
-		$Control2.show()
+		get_node("../Control2").show()
 		get_tree().paused = true
+		pause_mode = Node.PAUSE_MODE_INHERIT
 	
 	var health = get_node("../Towers/base").health
 	$Control/Label.text = "Base Health:  " + String(round(health))
@@ -107,6 +108,7 @@ func _update_ghost_position():
 
 
 func _on_Button_pressed():
-	$Control2.hide()
+	get_node("../Control2").hide()
 	$Control.show()
 	get_tree().paused = false
+	pause_mode = Node.PAUSE_MODE_PROCESS
