@@ -12,6 +12,7 @@ const Gatling = preload("res://scenes/towers/Gatling.tscn");
 var mouse_down: bool = false;
 var placing_tower: bool = false;
 var ghost_tower: Spatial;
+var can_place_tower: bool = false;
 
 func _ready():
 	pass
@@ -30,7 +31,7 @@ func _process(delta: float):
 func _input(event: InputEvent):
 	if event is InputEventMouseButton and event.button_index == 1:
 		mouse_down = event.pressed;
-		if placing_tower and event.pressed:
+		if placing_tower and can_place_tower and event.pressed:
 			placing_tower = false;
 			ghost_tower.queue_free();
 			towers.add_tower(Gatling.instance(), ghost_tower.global_transform.origin);
@@ -49,7 +50,9 @@ func _update_ghost_position():
 	ghost_tower.global_transform.origin = position;
 	var collision = ghost_tower.move_and_collide(Vector3.ZERO);
 	if collision == null:
+		can_place_tower = true;
 		ghost_tower.make_ghost();
 	else:
+		can_place_tower = false;
 		ghost_tower.make_ghost_collision();
 	ghost_tower.global_transform.origin = position;
