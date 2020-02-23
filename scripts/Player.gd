@@ -6,7 +6,8 @@ const drop_plane: Plane = Plane(Vector3.UP, 0);
 onready var camera = $Camera;
 onready var towers = get_node("../Towers");
 
-var Base = preload("res://scenes/towers/Base.tscn");
+const Base = preload("res://scenes/towers/Base.tscn");
+const Gatling = preload("res://scenes/towers/Gatling.tscn");
 
 var mouse_down: bool = false;
 var placing_tower: bool = false;
@@ -19,9 +20,9 @@ func _process(delta: float):
 	if Input.is_action_just_pressed("tower_place"):
 		placing_tower = !placing_tower;
 		if placing_tower:
-			ghost_tower = Base.instance();
+			ghost_tower = Gatling.instance();
 			add_child(ghost_tower);
-			ghost_tower.disabled = true;
+			ghost_tower.make_ghost();
 			_update_ghost_position();
 		else:
 			ghost_tower.queue_free();
@@ -32,7 +33,7 @@ func _input(event: InputEvent):
 		if placing_tower and event.pressed:
 			placing_tower = false;
 			ghost_tower.queue_free();
-			towers.add_tower(Base.instance(), ghost_tower.global_transform.origin);
+			towers.add_tower(Gatling.instance(), ghost_tower.global_transform.origin);
 	elif event is InputEventMouseMotion:
 		if placing_tower:
 			_update_ghost_position();
@@ -48,9 +49,7 @@ func _update_ghost_position():
 	ghost_tower.global_transform.origin = position;
 	var collision = ghost_tower.move_and_collide(Vector3.ZERO);
 	if collision == null:
-		pass
-#		ghost_tower.set_ghost();
+		ghost_tower.make_ghost();
 	else:
-		pass
-		# set red ghost
+		ghost_tower.make_ghost_collision();
 	ghost_tower.global_transform.origin = position;
