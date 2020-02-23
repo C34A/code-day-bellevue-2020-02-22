@@ -6,7 +6,7 @@ const drop_plane: Plane = Plane(Vector3.UP, 0);
 onready var camera = $Camera;
 onready var towers = get_node("../Towers");
 
-const Base = preload("res://scenes/towers/Base.tscn");
+const Base = preload("res://scenes/towers/base/base.tscn");
 const Gatling = preload("res://scenes/towers/Gatling.tscn");
 
 var mouse_down: bool = false;
