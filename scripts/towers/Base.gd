@@ -1,7 +1,6 @@
 extends KinematicBody
 
 var time_scale: float = 1;
-const DECAY_RATE = 0.1;
 
 onready var collision = $CollisionShape;
 
@@ -18,6 +17,8 @@ func damage(amount: float):
 
 func _process(delta: float):
 	delta *= time_scale;
-	health -= DECAY_RATE * delta;
 	if health <= 0:
 		queue_free();
+
+func get_id():
+	return 0;

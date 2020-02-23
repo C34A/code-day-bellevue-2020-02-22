@@ -19,7 +19,7 @@ func _process(delta):
 		collide.collider.hit(1)
 		var transform = global_transform
 		var particles_inst = particles.instance()
-		get_node("../../..").add_child(particles_inst)
+		get_node("../..").add_child(particles_inst)
 		particles_inst.global_transform = transform
 		queue_free()
 	

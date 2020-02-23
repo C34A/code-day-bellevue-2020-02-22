@@ -5,6 +5,8 @@ const COST = 200
 const GHOST_MATERIAL = preload("res://resources/towers/Gatling/ghost.tres")
 const GHOST_COLLISION_MATERIAL = preload("res://resources/towers/Gatling/ghost-collision.tres")
 var disabled: bool = false;
+var lifetime: float;
+var ghost: bool = false;
 
 onready var anim = $AnimationPlayer
 onready var area = $Area;
@@ -25,6 +27,12 @@ func _on_Area_body_exited(body):
 	if body.get('time_scale') != null:
 		body.time_scale = 1;
 
+func _process(delta: float):
+	if not ghost:
+		lifetime -= 1;
+		if lifetime <= 0:
+			queue_free();
+
 func set_all_materials(material):
 	$Icosphere.set_material_override(material)
 	$Cylinder.set_material_override(material)
@@ -43,3 +51,6 @@ func make_ghost_collision():
 func make_not_ghost():
 	set_all_materials(null)
 	disabled = false
+
+func get_id():
+	return 3;

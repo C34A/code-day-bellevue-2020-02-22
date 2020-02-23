@@ -101,7 +101,11 @@ tracks/0/keys = PoolRealArray( 0, 1, 0, 1.73701, 0, 0.707107, 0, 0, 0.707107, 0.
 extents = Vector3( 1, 0.5, 1 )
 
 [sub_resource type="SphereShape" id=7]
+<<<<<<< HEAD
 radius = 4.5
+=======
+radius = 5.0
+>>>>>>> time-travel
 
 [node name="warp" type="KinematicBody"]
 script = ExtResource( 6 )
