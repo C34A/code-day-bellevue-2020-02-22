@@ -5,7 +5,7 @@ var NormalEnemy = preload("res://scenes/enemies/NormalEnemy.tscn");
 var enemies: Array = [];
 var astar: AStar2D;
 const RESOLUTION = 4;
-const SIZE = 40;
+const SIZE = 100;
 
 func spawn_enemy(enemy: Spatial, position: Vector3):
 	enemies.append(enemy);
@@ -15,6 +15,11 @@ func spawn_enemy(enemy: Spatial, position: Vector3):
 func rebake_curves():
 	for e in enemies:
 		e.curve = null;
+		
+func warp_forward(offset):
+	for e in enemies:
+		e.curve = null;
+		e.warp_forward(offset);
 	
 func _ready():
 	astar = AStar2D.new();
@@ -40,4 +45,4 @@ func _ready():
 	var enemy = NormalEnemy.instance();
 	enemy.astar = astar;
 	enemy.target_point = middle;
-	spawn_enemy(enemy, Vector3(0, 0, 100));
+	spawn_enemy(enemy, Vector3(0, 0, 30));

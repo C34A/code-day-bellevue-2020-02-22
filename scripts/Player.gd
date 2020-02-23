@@ -11,22 +11,27 @@ const Base = preload("res://scenes/towers/base/base.tscn");
 const Gatling = preload("res://scenes/towers/Gatling.tscn");
 const Warp = preload("res://scenes/towers/Warp.tscn");
 const Laser = preload("res://scenes/towers/laser/laser.tscn");
-const Warp = preload("res://scenes/towers/warp/warp.tscn");
 
 var mouse_down: bool = false;
 var placing_tower: bool = false;
 var ghost_tower: Spatial;
 var can_place_tower: bool = false;
 var tower_type: PackedScene;
+var placing_tower_4d_offset: int = 0;
 
 func _ready():
 	pass
 	
 func _process(delta: float):
 	var place_pressed = false;
-	if Input.is_action_just_pressed("place_tower"):
+	if Input.is_action_just_pressed("ui_cancel"):
+		if placing_tower:
+			placing_tower = false;
+			ghost_tower.queue_free();
+	elif Input.is_action_just_pressed("place_tower"):
 		placing_tower = !placing_tower;
 		if placing_tower:
+			placing_tower_4d_offset = 0;
 			if Input.is_action_just_pressed("place_gatling"):
 				tower_type = Gatling;
 			elif Input.is_action_just_pressed("place_laser"):
@@ -34,6 +39,7 @@ func _process(delta: float):
 			elif Input.is_action_just_pressed("place_warp"):
 				tower_type = Warp;
 			ghost_tower = tower_type.instance();
+			ghost_tower.ghost = true;
 			add_child(ghost_tower);
 			ghost_tower.global_transform.basis = Basis();
 			ghost_tower.make_ghost();
@@ -42,6 +48,19 @@ func _process(delta: float):
 			_update_ghost_position();
 		else:
 			ghost_tower.queue_free();
+	if placing_tower:
+		var time_delta = 0;
+		if Input.is_action_pressed("place_warp_back"):
+			time_delta = -1;
+		elif Input.is_action_pressed("place_warp_forwards"):
+			time_delta = 1;
+		placing_tower_4d_offset += time_delta;
+		placing_tower_4d_offset = clamp(placing_tower_4d_offset, -towers.action_history.size(), 0);
+		if placing_tower_4d_offset != 0:
+			get_tree().paused = true;
+		else:
+			get_tree().paused = false;
+			
 
 func _input(event: InputEvent):
 	if event is InputEventMouseButton:
@@ -50,7 +69,8 @@ func _input(event: InputEvent):
 			if placing_tower and can_place_tower and event.pressed:
 				placing_tower = false;
 				ghost_tower.queue_free();
-				towers.add_tower(tower_type.instance(), ghost_tower.global_transform.origin);
+				get_tree().paused = false;
+				towers.add_tower(tower_type.instance(), ghost_tower.global_transform.origin, placing_tower_4d_offset);
 		elif event.button_index == 4:
 			$Camera.global_transform.origin *= (1/1.1)
 		elif event.button_index == 5:

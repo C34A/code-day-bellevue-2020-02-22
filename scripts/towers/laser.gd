@@ -7,6 +7,8 @@ var target_point: Vector2 = Vector2(0, 1)
 const COOLDOWN: float = .75
 var shot_cooldown: float = 0.75
 var disabled: bool = false
+var ghost: bool = false;
+var lifetime: float;
 
 const RANGE = 200.0
 
@@ -23,6 +25,10 @@ func _ready():
 
 func _process(delta):
 	delta *= time_scale;
+	if not ghost:
+		lifetime -= time_scale;
+		if lifetime <= 0:
+			queue_free();
 	if not disabled:
 		var pos: Vector2 = Vector2(global_transform.origin.x, global_transform.origin.z)
 		var target_angle: float = atan2((target_point - pos).x, (target_point - pos).y)
@@ -112,3 +118,6 @@ func make_not_ghost():
 
 func stop_shooting():
 	spawn_bullets = false
+
+func get_id():
+	return 2;

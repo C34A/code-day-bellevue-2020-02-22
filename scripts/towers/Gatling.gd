@@ -7,6 +7,8 @@ var target_point: Vector2 = Vector2(0, 1)
 const COOLDOWN: float = 0.25
 var shot_cooldown: float = 0.25
 var disabled: bool = false
+var ghost: bool = false;
+var lifetime: float;
 
 const RANGE = 100.0
 
@@ -27,6 +29,10 @@ func _ready():
 
 func _process(delta):
 	delta *= time_scale;
+	if not ghost:
+		lifetime -= time_scale;
+		if lifetime <= 0:
+			queue_free();
 	animation.playback_speed = time_scale;
 	if not disabled:
 		var pos: Vector2 = Vector2(global_transform.origin.x, global_transform.origin.z)
@@ -51,7 +57,7 @@ func _process(delta):
 		if spawn_bullets:
 			if shot_cooldown <= 0:
 				var projectile = bullet_scene.instance()
-				get_node("..").add_child(projectile)
+				get_node("../..").add_child(projectile)
 				projectile.global_transform = bullet_point.global_transform
 #				projectile.global_rotate(Vector3.UP, bullet_point.global_transform.basis.get_euler().y)
 
@@ -120,3 +126,6 @@ func make_not_ghost():
 func stop_shooting():
 	spawn_bullets = false
 	animation.stop()
+
+func get_id():
+	return 1;

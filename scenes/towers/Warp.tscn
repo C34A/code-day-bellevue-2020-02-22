@@ -99,10 +99,10 @@ tracks/0/keys = PoolRealArray( 0, 1, 0, 1.73701, 0, 0.707107, 0, 0, 0.707107, 0.
 [sub_resource type="BoxShape" id=6]
 extents = Vector3( 1, 0.5, 1 )
 
-[sub_resource type="SphereShape" id=15]
+[sub_resource type="SphereShape" id=7]
 radius = 5.0
 
-[node name="Warp" type="KinematicBody"]
+[node name="warp" type="KinematicBody"]
 script = ExtResource( 6 )
 
 [node name="Icosphere" type="MeshInstance" parent="."]
@@ -147,6 +147,6 @@ material = ExtResource( 7 )
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.66, 0 )
 
 [node name="CollisionPolygon" type="CollisionShape" parent="Area"]
-shape = SubResource( 15 )
+shape = SubResource( 7 )
 [connection signal="body_entered" from="Area" to="." method="_on_Area_body_entered"]
 [connection signal="body_exited" from="Area" to="." method="_on_Area_body_exited"]
