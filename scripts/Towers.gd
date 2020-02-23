@@ -1,6 +1,6 @@
 extends Spatial
 
-const Base = preload("res://scenes/towers/Base.tscn");
+const Base = preload("res://scenes/towers/base/base.tscn");
 const Gatling = preload("res://scenes/towers/Gatling.tscn");
 
 var towers: Array = [];
