@@ -1,5 +1,7 @@
 extends KinematicBody
 
+var time_scale: float = 1;
+
 var speed = 10;
 var astar: AStar2D;
 #var spheres = [];
@@ -11,6 +13,7 @@ func _ready():
 	pass
 	
 func _process(delta):
+	delta *= time_scale;
 	var point = astar.get_closest_point(Vector2(translation.x, translation.z));
 	var path = astar.get_point_path(point, target_point);
 	if (path.size() < 2):

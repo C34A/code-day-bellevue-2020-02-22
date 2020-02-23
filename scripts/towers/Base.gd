@@ -1,5 +1,6 @@
 extends KinematicBody
 
+var time_scale: float = 1;
 const DECAY_RATE = 0.1;
 
 onready var collision = $CollisionShape;
@@ -15,6 +16,7 @@ func damage(amount: float):
 	# play animation
 
 func _process(delta: float):
-	health -= DECAY_RATE;
+	delta *= time_scale;
+	health -= DECAY_RATE * delta;
 	if health <= 0:
 		queue_free();
