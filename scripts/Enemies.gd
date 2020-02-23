@@ -8,6 +8,7 @@ const RESOLUTION = 4;
 const SIZE = 100;
 var timer
 
+var middle: int
 
 func spawn_enemy(enemy: Spatial, position: Vector3):
 #	enemies.append(enemy);
@@ -35,7 +36,7 @@ func _ready():
 	
 	astar = AStar2D.new();
 	var i = 0;
-	var middle;
+#	var middle;
 	for x in range(-SIZE/RESOLUTION, SIZE/RESOLUTION):
 		for y in range(-SIZE/RESOLUTION, SIZE/RESOLUTION):
 			astar.add_point(i, Vector2(x * RESOLUTION,  y * RESOLUTION));
@@ -57,3 +58,11 @@ func _ready():
 	enemy.astar = astar;
 	enemy.target_point = middle;
 	spawn_enemy(enemy, Vector3(0, 0, 30));
+	
+
+func _process(delta):
+	if Input.is_action_just_pressed("ui_select"):
+		var enemy = NormalEnemy.instance();
+		enemy.astar = astar;
+		enemy.target_point = middle;
+		spawn_enemy(enemy, Vector3(10, 0, 30));

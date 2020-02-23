@@ -36,6 +36,8 @@ func hit(damage: int):
 var history_tick = 0;
 
 func _process(delta):
+	print(curve)
+	
 	delta *= time_scale;
 	var position2D = Vector2(translation.x, translation.z);
 	var point = astar.get_closest_point(position2D);
