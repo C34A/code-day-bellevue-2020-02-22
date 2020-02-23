@@ -57,7 +57,7 @@ func _physics_process(delta):
 			targetEnemyDist = dist
 			targetEnemy = e
 	
-	print(targetEnemyDist)
+#	print(targetEnemyDist)
 	
 	
 	if targetEnemyDist < RANGE:

@@ -1,7 +1,11 @@
-[gd_resource type="Environment" load_steps=2 format=2]
+[gd_resource type="Environment" load_steps=3 format=2]
 
-[sub_resource type="ProceduralSky" id=1]
+[ext_resource path="res://resources/hdr.png" type="Texture" id=1]
+
+[sub_resource type="PanoramaSky" id=1]
+panorama = ExtResource( 1 )
 
 [resource]
 background_mode = 2
 background_sky = SubResource( 1 )
+background_sky_orientation = Basis( 0.809397, 0.463267, -0.360916, -2.00254e-07, -0.614574, -0.788859, -0.587262, 0.6385, -0.497434 )

@@ -4,7 +4,7 @@ const DECAY_RATE = 0.1;
 
 onready var collision = $CollisionShape;
 
-var health: float = 100;
+var health: float = 100.0;
 var disabled: bool = false;
 
 func _ready():

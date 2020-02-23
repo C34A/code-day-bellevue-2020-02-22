@@ -1,8 +1,9 @@
-extends Spatial
+extends KinematicBody
 
 const MOUSE_SENSITIVITY: float = 0.005;
 const drop_plane: Plane = Plane(Vector3.UP, 0);
-
+const PAN_SPEED = 300.0
+  
 onready var camera = $Camera;
 onready var towers = get_node("../Towers");
 
@@ -29,12 +30,17 @@ func _process(delta: float):
 			ghost_tower.queue_free();
 
 func _input(event: InputEvent):
-	if event is InputEventMouseButton and event.button_index == 1:
-		mouse_down = event.pressed;
-		if placing_tower and can_place_tower and event.pressed:
-			placing_tower = false;
-			ghost_tower.queue_free();
-			towers.add_tower(Gatling.instance(), ghost_tower.global_transform.origin);
+	if event is InputEventMouseButton:
+		if event.button_index == 1:
+			mouse_down = event.pressed;
+			if placing_tower and can_place_tower and event.pressed:
+				placing_tower = false;
+				ghost_tower.queue_free();
+				towers.add_tower(Gatling.instance(), ghost_tower.global_transform.origin);
+		elif event.button_index == 4:
+			$Camera.global_transform.origin *= (1/1.1)
+		elif event.button_index == 5:
+			$Camera.global_transform.origin *= 1.1
 	elif event is InputEventMouseMotion:
 		if placing_tower:
 			_update_ghost_position();
