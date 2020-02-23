@@ -19,7 +19,6 @@ const GHOST_COLLISION_MATERIAL = preload("res://resources/towers/Gatling/ghost-c
 func _ready():
 	pass
 
-
 func _process(delta):
 	if not disabled:
 		var pos: Vector2 = Vector2(global_transform.origin.x, global_transform.origin.z)
