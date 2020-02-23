@@ -3,14 +3,15 @@
 [ext_resource path="res://resources/enemies/NormalEnemy/Archangel Ship.dae" type="PackedScene" id=1]
 [ext_resource path="res://scripts/enemies/NormalEnemy.gd" type="Script" id=2]
 
-[sub_resource type="CylinderShape" id=2]
+[sub_resource type="CylinderShape" id=1]
 radius = 1.5
 
 [node name="NormalEnemy" type="KinematicBody"]
 script = ExtResource( 2 )
 
 [node name="Archangel Ship" parent="." instance=ExtResource( 1 )]
-transform = Transform( -0.00586412, 0, -0.499966, 0, 0.5, 0, 0.499966, 0, -0.00586412, 0, -0.7, 0.966217 )
+transform = Transform( -0.00586412, 0, -0.499966, 0, 0.5, 0, 0.499966, 0, -0.00586412, 0, 0.3, 0.966217 )
 
 [node name="CollisionShape" type="CollisionShape" parent="."]
-shape = SubResource( 2 )
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0 )
+shape = SubResource( 1 )
