@@ -7,6 +7,7 @@ const GHOST_COLLISION_MATERIAL = preload("res://resources/towers/Gatling/ghost-c
 var disabled: bool = false;
 var lifetime: float;
 var ghost: bool = false;
+var time_scale: float = 0.5;
 
 onready var anim = $AnimationPlayer
 onready var area = $Area;
@@ -19,7 +20,7 @@ func _on_Area_body_entered(body):
 	if disabled:
 		return;
 	if body.get('time_scale') != null:
-		body.time_scale = 0.1;
+		body.time_scale = time_scale;
 		
 func _on_Area_body_exited(body):
 	if disabled:

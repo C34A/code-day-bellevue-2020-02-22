@@ -15,7 +15,6 @@ func add_tower(tower: Spatial, position: Vector3, temporal_offset: int):
 	tower.global_transform.origin = position;
 	if tower.get_id() != 0:
 		tower.lifetime = TOWER_DECAY_TICKS + temporal_offset * 10;
-		print(tower.lifetime);
 		var closest_point = enemies.astar.get_closest_point(Vector2(position.x, position.z));
 		if enemies.astar.get_point_position(closest_point).distance_squared_to(Vector2(position.x, position.z)) < 5:
 			enemies.astar.set_point_disabled(closest_point);

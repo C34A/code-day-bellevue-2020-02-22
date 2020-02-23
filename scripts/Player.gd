@@ -18,11 +18,22 @@ var ghost_tower: Spatial;
 var can_place_tower: bool = false;
 var tower_type: PackedScene;
 var placing_tower_4d_offset: int = 0;
+var setting_time_scale: bool = false;
+var time_scale_set: bool = false;
+var time_scale: float = 1;
 
 func _ready():
 	get_node("../Control2").pause_mode = Node.PAUSE_MODE_PROCESS
-	
+
 func _process(delta: float):
+	if setting_time_scale:
+		if Input.is_action_just_pressed("edit_scale"):
+			time_scale_set = true;
+		elif Input.is_action_pressed("place_warp_forwards"):
+			time_scale += 0.1;
+		elif Input.is_action_pressed("place_warp_back"):
+			time_scale -= 0.1;
+		time_scale = clamp(time_scale,0.5, 2);
 	var place_pressed = false;
 	if Input.is_action_just_pressed("ui_cancel"):
 		if placing_tower:
@@ -48,7 +59,7 @@ func _process(delta: float):
 			_update_ghost_position();
 		else:
 			ghost_tower.queue_free();
-	if placing_tower:
+	if placing_tower and not setting_time_scale:
 		var time_delta = 0;
 		if Input.is_action_pressed("place_warp_back"):
 			time_delta = -1;
@@ -64,8 +75,10 @@ func _process(delta: float):
 	if placing_tower:
 		$Control/TimeBar/Rect.visible = true;
 		$Control/TimeBar/Rect.anchor_top = float(placing_tower_4d_offset) / -towers.action_history.size();
-	else:
+	elif not setting_time_scale:
 		$Control/TimeBar/Rect.visible = false;
+	if setting_time_scale:
+		$Control/TimeBar/Rect.anchor_top = 1-(time_scale-0.5)/1.5;
 		
 	if Input.is_action_just_pressed("ui_cancel"):
 		$Control.hide()
@@ -84,19 +97,31 @@ func _input(event: InputEvent):
 		if event.button_index == 1:
 			mouse_down = event.pressed;
 			if placing_tower and can_place_tower and event.pressed:
+				var tower2 = tower_type.instance();
+				if tower2.get_id() == 3:
+					if setting_time_scale:
+						tower2.time_scale = time_scale;
+						setting_time_scale = false;
+					else:
+						time_scale = 1.0;
+						time_scale_set = false;
+						setting_time_scale = true;
+						get_tree().paused = true;
+						return;
+					
 				placing_tower = false;
 				Econ.money -= ghost_tower.COST;
 				ghost_tower.queue_free();
 				get_tree().paused = false;
-				towers.add_tower(tower_type.instance(), ghost_tower.global_transform.origin, placing_tower_4d_offset);
+				towers.add_tower(tower2, ghost_tower.global_transform.origin, placing_tower_4d_offset);
 		elif event.button_index == 4 && $Camera.transform.origin.x > 1:
 			$Camera.transform.origin *= (1/1.1)
 		elif event.button_index == 5 && $Camera.transform.origin.x < 30:
 			$Camera.transform.origin *= 1.1
 	elif event is InputEventMouseMotion:
-		if placing_tower:
+		if placing_tower and not setting_time_scale:
 			_update_ghost_position();
-		elif mouse_down:
+		elif mouse_down and not setting_time_scale:
 			rotate_y(-event.relative.x * MOUSE_SENSITIVITY);
 
 
