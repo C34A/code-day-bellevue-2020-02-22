@@ -9,6 +9,7 @@ var shot_cooldown: float = 0.75
 var disabled: bool = false
 var ghost: bool = false;
 var lifetime: float;
+var cast_yet: bool = false;
 
 const COST = 150
 
@@ -16,6 +17,7 @@ const RANGE = 1000.0
 
 onready var animation = $AnimationPlayer
 onready var turret_top = $top
+onready var raycast = $top/RayCast;
 
 const ROTSPEED: float = .75
 var slerp_val = 0
@@ -67,8 +69,14 @@ func _process(delta):
 			if shot_cooldown <= 0:
 				$AnimationPlayer.play("default")
 				shot_cooldown = COOLDOWN
+				cast_yet = false;
 			else:
 				shot_cooldown -= delta
+			if shot_cooldown < 0.7 and not cast_yet:
+				cast_yet = true;
+				var collider = raycast.get_collider();
+				if collider:
+					collider.hit(3);
 
 
 func _physics_process(delta):

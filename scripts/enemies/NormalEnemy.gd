@@ -65,18 +65,23 @@ func _process(delta):
 #		spheres.append(s);
 #
 		
-		
+	var start_deg = rotation;
 	if curve.get_baked_points()[i].distance_squared_to(Vector2(transform.origin.x, transform.origin.z)) < 0.5 * 0.5:
 		i += 1;
 		slerp_val = 0.0;
 	var target = Vector3(curve.get_baked_points()[i].x, 0, curve.get_baked_points()[i].y);
 	var toNext = transform.looking_at(target, Vector3.UP)
 	var thisRot = Quat(transform.basis).slerp(toNext.basis.get_rotation_quat(), slerp_val)
-	slerp_val += 2.0*delta
+	slerp_val += 2.0 * delta
 	if slerp_val > 1:
 		slerp_val = 1;
 	
 	set_transform(Transform(thisRot, transform.origin))
+	
+	var rot_dist = rotation - start_deg;
+	print(rot_dist)
+	
+	rotate_x(rot_dist.y)
 	
 	var collision = move_and_collide((target - transform.origin).normalized() * delta * speed);
 	if collision != null:

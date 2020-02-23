@@ -16,7 +16,7 @@ default_input_values = [ 0, 0.0, 1, 0.03, 2, 0.5 ]
 input_name = "uv"
 
 [sub_resource type="VisualShaderNodeVectorOp" id=5]
-default_input_values = [ 0, Vector3( 0, 0, 0 ), 1, Vector3( 3, 3, 3 ) ]
+default_input_values = [ 0, Vector3( 0, 0, 0 ), 1, Vector3( 5, 5, 5 ) ]
 operator = 2
 
 [sub_resource type="VisualShaderNodeTexture" id=6]
@@ -46,7 +46,7 @@ void fragment() {
 	n_out6p0 = vec3(UV,0.0);
 
 // VectorOp:7
-	vec3 n_in7p1 = vec3(3.00000,3.00000,3.00000);
+	vec3 n_in7p1 = vec3(5.00000,5.00000,5.00000);
 	vec3 n_out7p0;
 	n_out7p0 = n_out6p0 * n_in7p1;
 
@@ -84,7 +84,7 @@ void light() {
 
 }
 "
-graph_offset = Vector2( -272.2, 131.3 )
+graph_offset = Vector2( -863.539, 225 )
 nodes/fragment/4/node = SubResource( 2 )
 nodes/fragment/4/position = Vector2( 60, 140 )
 nodes/fragment/5/node = SubResource( 3 )
@@ -119,20 +119,41 @@ script = ExtResource( 2 )
 
 [node name="Camera" type="Camera" parent="Player"]
 transform = Transform( 0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 10, 10, 10 )
+far = 500.0
 
 [node name="Control" type="Control" parent="Player"]
-margin_right = 40.0
-margin_bottom = 40.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="Player/Control"]
-margin_left = 718.0
-margin_top = 505.0
-margin_right = 918.0
-margin_bottom = 558.0
-text = "Base health: "
+[node name="HealthBar" type="ColorRect" parent="Player/Control"]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = -18.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Rect" type="ColorRect" parent="Player/Control/HealthBar"]
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+margin_left = 4.0
+margin_top = -5.0
+margin_right = -4.0
+margin_bottom = 5.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Money" type="Label" parent="Player/Control"]
+margin_right = 40.0
+margin_bottom = 14.0
+text = "¥0"
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -145,7 +166,7 @@ transform = Transform( -0.99689, -0.00125984, -0.0787969, 0.078807, -0.0159367, 
 
 [node name="CSGBox" type="CSGBox" parent="."]
 transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0 )
-width = 80.0
-height = 0.1
-depth = 80.0
+width = 500.0
+height = 0.8
+depth = 500.0
 material = SubResource( 9 )

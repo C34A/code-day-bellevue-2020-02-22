@@ -60,9 +60,13 @@ func _process(delta: float):
 			get_tree().paused = true;
 		else:
 			get_tree().paused = false;
-			
-	var health = get_node("../Towers/base").health
-	$Control/Label.text = "Base Health:  " + String(round(health))
+	
+	if (get_node("../Towers/base")):
+		var health = get_node("../Towers/base").health;
+		$Control/HealthBar/Rect.anchor_right = health / 100;
+	else:
+		print("Game over");
+	$Control/Money.text = "¥" + str(Econ.money);
 
 func _input(event: InputEvent):
 	if event is InputEventMouseButton:
