@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://resources/towers/Gatling/Material_001.material" type="Material" id=1]
 [ext_resource path="res://scripts/towers/Gatling.gd" type="Script" id=2]
@@ -6,6 +6,7 @@
 [ext_resource path="res://resources/towers/Gatling/Material_003.material" type="Material" id=4]
 [ext_resource path="res://resources/towers/Gatling/darker.material" type="Material" id=5]
 [ext_resource path="res://resources/towers/Gatling/base.material" type="Material" id=6]
+[ext_resource path="res://resources/towers/base/base.material" type="Material" id=7]
 
 [sub_resource type="ArrayMesh" id=1]
 resource_name = "Cube.001"
@@ -103,7 +104,7 @@ script = ExtResource( 2 )
 
 [node name="tower" type="MeshInstance" parent="."]
 mesh = SubResource( 1 )
-material/0 = null
+material/0 = ExtResource( 7 )
 material/1 = null
 
 [node name="top" type="MeshInstance" parent="tower"]

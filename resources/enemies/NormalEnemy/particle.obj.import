@@ -1,0 +1,19 @@
+[remap]
+
+importer="wavefront_obj"
+type="Mesh"
+path="res://.import/particle.obj-2c23f97fbb7bd8ade6e7f25cd786237e.mesh"
+
+[deps]
+
+files=[ "res://.import/particle.obj-2c23f97fbb7bd8ade6e7f25cd786237e.mesh" ]
+
+source_file="res://resources/enemies/NormalEnemy/particle.obj"
+dest_files=[ "res://.import/particle.obj-2c23f97fbb7bd8ade6e7f25cd786237e.mesh", "res://.import/particle.obj-2c23f97fbb7bd8ade6e7f25cd786237e.mesh" ]
+
+[params]
+
+generate_tangents=true
+scale_mesh=Vector3( 1, 1, 1 )
+offset_mesh=Vector3( 0, 0, 0 )
+optimize_mesh=true

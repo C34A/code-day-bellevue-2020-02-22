@@ -1,5 +1,7 @@
 extends KinematicBody
 
+const COST = 200
+
 const GHOST_MATERIAL = preload("res://resources/towers/Gatling/ghost.tres")
 const GHOST_COLLISION_MATERIAL = preload("res://resources/towers/Gatling/ghost-collision.tres")
 var disabled: bool = false;

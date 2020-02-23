@@ -19,6 +19,10 @@ config/name="Paradox"
 run/main_scene="res://World.tscn"
 config/icon="res://icon.png"
 
+[autoload]
+
+Econ="*res://scripts/Econ.gd"
+
 [input]
 
 place_gatling={

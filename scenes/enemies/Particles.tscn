@@ -1,0 +1,82 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://scripts/enemies/particle-explode.gd" type="Script" id=1]
+
+[sub_resource type="Gradient" id=1]
+offsets = PoolRealArray( 0, 0.514768, 0.810127, 1 )
+colors = PoolColorArray( 1, 0.0117647, 0.0117647, 1, 1, 0.0549182, 0.00843883, 0.7173, 1, 0.145098, 0.00392157, 0.121569, 1, 0.560784, 0, 0 )
+
+[sub_resource type="GradientTexture" id=2]
+gradient = SubResource( 1 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+lifetime_randomness = 0.41
+spread = 101.09
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 10.0
+initial_velocity_random = 1.0
+angular_velocity = -386.09
+angular_velocity_random = 0.68
+linear_accel = -10.0
+tangential_accel = 2.9
+color_ramp = SubResource( 2 )
+
+[sub_resource type="VisualShaderNodeInput" id=4]
+input_name = "color"
+
+[sub_resource type="VisualShaderNodeInput" id=5]
+input_name = "alpha"
+
+[sub_resource type="VisualShader" id=6]
+code = "shader_type spatial;
+
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Input:3
+	float n_out3p0;
+	n_out3p0 = COLOR.a;
+
+// Input:2
+	vec3 n_out2p0;
+	n_out2p0 = COLOR.rgb;
+
+// Output:0
+	ALPHA = n_out3p0;
+	EMISSION = n_out2p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -557, 124 )
+nodes/fragment/2/node = SubResource( 4 )
+nodes/fragment/2/position = Vector2( -380, 280 )
+nodes/fragment/3/node = SubResource( 5 )
+nodes/fragment/3/position = Vector2( -180, 200 )
+nodes/fragment/connections = PoolIntArray( 2, 0, 0, 5, 3, 0, 0, 1 )
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
+
+[sub_resource type="CubeMesh" id=8]
+material = SubResource( 7 )
+size = Vector3( 0.75, 0.75, 0.57 )
+
+[node name="Particles" type="Particles"]
+emitting = false
+amount = 64
+lifetime = 0.93
+one_shot = true
+explosiveness = 1.0
+process_material = SubResource( 3 )
+draw_pass_1 = SubResource( 8 )
+script = ExtResource( 1 )

@@ -8,47 +8,58 @@ const COOLDOWN: float = .75
 var shot_cooldown: float = 0.75
 var disabled: bool = false
 
-const RANGE = 200.0
+const COST = 150
+
+const RANGE = 1000.0
 
 onready var animation = $AnimationPlayer
 onready var turret_top = $top
 
-const ROTSPEED: float = 3.0
+const ROTSPEED: float = .75
+var slerp_val = 0
 
 const GHOST_MATERIAL = preload("res://resources/towers/Gatling/ghost.tres")
 const GHOST_COLLISION_MATERIAL = preload("res://resources/towers/Gatling/ghost-collision.tres")
 
 func _ready():
-	pass
+	animation.set_speed_scale(0.5)
 
 func _process(delta):
 	delta *= time_scale;
 	if not disabled:
 		var pos: Vector2 = Vector2(global_transform.origin.x, global_transform.origin.z)
-		var target_angle: float = atan2((target_point - pos).x, (target_point - pos).y)
+#		var target_angle: float = atan2((target_point - pos).x, (target_point - pos).y)
 ##		print($tower/top.global_transform.basis.get_euler().y - target_angle)
 #		print(target_point)
 #		print(target_angle)
 		
 	#	$tower/top.global_transform.basis = $tower/top.global_transform.basis.rotated(Vector3.UP, ROTSPEED * delta)
-		var turret_rot = (turret_top.global_transform.basis.get_euler().y)
+#		var turret_rot = (turret_top.global_transform.basis.get_euler().y)
 		
-		while(target_angle > (2*PI)):
-			target_angle -= 2*PI
-		while(target_angle < 0):
-			target_angle += 2*PI
+#		while(target_angle > (2*PI)):
+#			target_angle -= 2*PI
+#		while(target_angle < 0):
+#			target_angle += 2*PI
+#
+#		while(turret_rot > (2*PI)):
+#			turret_rot -= 2*PI
+#		while(turret_rot < 0):
+#			turret_rot += 2*PI
+#
+#		print(turret_rot, " ", target_angle)
+#		turret_top.rotate_y(ROTSPEED * delta * sign((target_angle - PI/2) - turret_rot))
 		
-		while(turret_rot > (2*PI)):
-			turret_rot -= 2*PI
-		while(turret_rot < 0):
-			turret_rot += 2*PI
-			
-		print(turret_rot, " ", target_angle)
-		turret_top.rotate_y(ROTSPEED * delta * sign((target_angle - PI/2) - turret_rot))
+		var targ: Vector3 = Vector3(target_point.x, 0, target_point.y);
+		var rotTransform = global_transform.looking_at(targ, Vector3.UP).rotated(Vector3.UP, PI/2.0)
+		var thisRotation = Quat(global_transform.basis).slerp(rotTransform.basis, slerp_val)
+		slerp_val += ROTSPEED * delta
+		if slerp_val > 1:
+			slerp_val = 1
+		turret_top.set_global_transform(Transform(thisRotation, turret_top.global_transform.origin))
 		
 		if spawn_bullets:
 			if shot_cooldown <= 0:
-				$AnimationPlayer.play()
+				$AnimationPlayer.play("default")
 				shot_cooldown = COOLDOWN
 			else:
 				shot_cooldown -= delta
@@ -58,7 +69,7 @@ func _physics_process(delta):
 	
 	var targetEnemy
 	var targetEnemyDist = 9999999.0
-	for e in get_node("../../Enemies").enemies:
+	for e in get_node("../../Enemies").get_children():
 		var dist = global_transform.origin.distance_squared_to(e.global_transform.origin)
 		if dist < targetEnemyDist:
 			targetEnemyDist = dist

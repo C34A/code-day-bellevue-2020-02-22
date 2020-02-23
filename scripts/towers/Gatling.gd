@@ -8,13 +8,16 @@ const COOLDOWN: float = 0.25
 var shot_cooldown: float = 0.25
 var disabled: bool = false
 
+const COST = 100
+
 const RANGE = 100.0
 
 onready var animation = $AnimationPlayer
 onready var turret_top = $tower/top
 onready var bullet_point = $tower/top/bullet_point
 
-const ROTSPEED: float = 3.0
+const ROTSPEED: float = .75
+var slerp_val: float = 0.0
 
 const GHOST_MATERIAL = preload("res://resources/towers/Gatling/ghost.tres")
 const GHOST_COLLISION_MATERIAL = preload("res://resources/towers/Gatling/ghost-collision.tres")
@@ -30,23 +33,16 @@ func _process(delta):
 	animation.playback_speed = time_scale;
 	if not disabled:
 		var pos: Vector2 = Vector2(global_transform.origin.x, global_transform.origin.z)
-		var target_angle: float = atan2((target_point - pos).x, (target_point - pos).y)
-##		print($tower/top.global_transform.basis.get_euler().y - target_angle)
-#		print(target_point)
-#		print(target_angle)
+#		var target_angle float = atan2((target_point - pos).x, (target_point - pos).y)
 		
-		while(target_angle > (2*PI)):
-			target_angle -= 2*PI
-		while(target_angle < 0):
-			target_angle += 2*PI
-		var turret_rot = turret_top.global_transform.basis.get_euler().y
-		while(turret_rot > (2*PI)):
-			turret_rot -= 2*PI
-		while(turret_rot < 0):
-			turret_rot += 2*PI
-		
-	#	$tower/top.global_transform.basis = $tower/top.global_transform.basis.rotated(Vector3.UP, ROTSPEED * delta)
-		$tower/top.rotate_y(ROTSPEED * delta * sign(target_angle - turret_rot))
+		var targ: Vector3 = Vector3(target_point.x, 0, target_point.y);
+		var rotTransform = global_transform.looking_at(targ, Vector3.UP).rotated(Vector3.UP, PI)
+		var thisRotation = Quat(global_transform.basis).slerp(rotTransform.basis, slerp_val)
+		slerp_val += ROTSPEED * delta
+		if slerp_val > 1:
+			slerp_val = 1
+		turret_top.set_global_transform(Transform(thisRotation, turret_top.global_transform.origin))
+
 		
 		if spawn_bullets:
 			if shot_cooldown <= 0:
@@ -64,7 +60,7 @@ func _physics_process(delta):
 	
 	var targetEnemy
 	var targetEnemyDist = 9999999.0
-	for e in get_node("../../Enemies").enemies:
+	for e in get_node("../../Enemies").get_children():
 		var dist = global_transform.origin.distance_squared_to(e.global_transform.origin)
 		if dist < targetEnemyDist:
 			targetEnemyDist = dist
@@ -114,6 +110,7 @@ func make_ghost_collision():
 func make_not_ghost():
 	stop_shooting()
 	set_all_materials(null)
+	$tower.set_material_override(1, load("res://resources/towers/base/base.material"))
 	disabled = false
 
 

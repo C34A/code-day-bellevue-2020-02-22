@@ -11,7 +11,6 @@ const Base = preload("res://scenes/towers/base/base.tscn");
 const Gatling = preload("res://scenes/towers/Gatling.tscn");
 const Warp = preload("res://scenes/towers/Warp.tscn");
 const Laser = preload("res://scenes/towers/laser/laser.tscn");
-const Warp = preload("res://scenes/towers/warp/warp.tscn");
 
 var mouse_down: bool = false;
 var placing_tower: bool = false;
@@ -49,12 +48,13 @@ func _input(event: InputEvent):
 			mouse_down = event.pressed;
 			if placing_tower and can_place_tower and event.pressed:
 				placing_tower = false;
+				Econ.money -= ghost_tower.COST;
 				ghost_tower.queue_free();
 				towers.add_tower(tower_type.instance(), ghost_tower.global_transform.origin);
-		elif event.button_index == 4:
-			$Camera.global_transform.origin *= (1/1.1)
-		elif event.button_index == 5:
-			$Camera.global_transform.origin *= 1.1
+		elif event.button_index == 4 && $Camera.transform.origin.x > 1:
+			$Camera.transform.origin *= (1/1.1)
+		elif event.button_index == 5 && $Camera.transform.origin.x < 30:
+			$Camera.transform.origin *= 1.1
 	elif event is InputEventMouseMotion:
 		if placing_tower:
 			_update_ghost_position();
@@ -69,7 +69,7 @@ func _update_ghost_position():
 		camera.project_ray_normal(position2D));
 	ghost_tower.global_transform.origin = position;
 	var collision = ghost_tower.move_and_collide(Vector3.ZERO);
-	if collision == null:
+	if collision == null and Econ.money >= ghost_tower.COST:
 		can_place_tower = true;
 		ghost_tower.make_ghost();
 	else:

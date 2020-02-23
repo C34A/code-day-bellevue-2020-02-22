@@ -14,6 +14,7 @@ func _ready():
 func damage(amount: float):
 	health -= amount;
 	# play animation
+	$Particles.emitting = true
 
 func _process(delta: float):
 	delta *= time_scale;

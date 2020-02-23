@@ -2,21 +2,32 @@ extends Spatial
 
 var NormalEnemy = preload("res://scenes/enemies/NormalEnemy.tscn");
 
-var enemies: Array = [];
+#var enemies: Array = [];
 var astar: AStar2D;
 const RESOLUTION = 4;
 const SIZE = 40;
+var timer
+
 
 func spawn_enemy(enemy: Spatial, position: Vector3):
-	enemies.append(enemy);
+#	enemies.append(enemy);
 	enemy.global_transform.origin = position;
 	add_child(enemy);
 	
 func rebake_curves():
-	for e in enemies:
+	for e in get_children():
 		e.curve = null;
+
+func timer_rebake():
+	rebake_curves()
+	timer.start()
 	
 func _ready():
+	timer = Timer.new()
+	timer.set_wait_time(5)
+	timer.connect("timeout", self, "timer_rebake")
+	timer.start()
+	
 	astar = AStar2D.new();
 	var i = 0;
 	var middle;

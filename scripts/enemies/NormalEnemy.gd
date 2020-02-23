@@ -1,17 +1,38 @@
 extends KinematicBody
 
 var time_scale: float = 1;
-
+var timer
+var override_pos
+var health: int = 10
+var particles = preload("res://scenes/enemies/Particles.tscn")
 var speed = 10;
 var astar: AStar2D;
 #var spheres = [];
 var curve;
 var target_point;
 var i = 0;
+var slerp_val: float
+
+const ATTACK_COOLDOWN = 1.0
+var cooldown = 1.0
+const DAMAGE = 25.1 #.1 in case of float error
 
 func _ready():
 	pass
-	
+
+
+func hit(damage: int):
+	health -= damage;
+	if health <= 0:
+		Econ.money += Econ.KILL_REWARD;
+#		queue_free()
+		var transform = global_transform
+		var particles_inst = particles.instance()
+		get_node("../..").add_child(particles_inst)
+		particles_inst.global_transform = transform
+		queue_free()
+#		get_parent().
+
 func _process(delta):
 	delta *= time_scale;
 	var point = astar.get_closest_point(Vector2(translation.x, translation.z));
@@ -44,9 +65,26 @@ func _process(delta):
 		
 	if curve.get_baked_points()[i].distance_squared_to(Vector2(transform.origin.x, transform.origin.z)) < 0.5 * 0.5:
 		i += 1;
+		slerp_val = 0.0;
 	var target = Vector3(curve.get_baked_points()[i].x, 0, curve.get_baked_points()[i].y);
-	transform = transform.looking_at(target, Vector3.UP)
-	move_and_collide((target - transform.origin).normalized() * delta * speed);
+	var toNext = transform.looking_at(target, Vector3.UP)
+	var thisRot = Quat(transform.basis).slerp(toNext.basis.get_rotation_quat(), slerp_val)
+	slerp_val += 2.0*delta
+	if slerp_val > 1:
+		slerp_val = 1;
+	
+	set_transform(Transform(thisRot, transform.origin))
+	
+	var collision = move_and_collide((target - transform.origin).normalized() * delta * speed);
+	if collision != null:
+#		print("bink")
+		if collision.collider.get_name() == "base":
+#			print("bank")
+			if cooldown <= 0:
+#				print("bonk")
+				collision.collider.damage(DAMAGE)
+				cooldown = ATTACK_COOLDOWN
+	cooldown -= delta
 
 func get_control_points(p0, p1, p2, t):
 	var d01 = sqrt(pow(p1.x - p0.x, 2) + pow(p1.y - p0.y, 2));
