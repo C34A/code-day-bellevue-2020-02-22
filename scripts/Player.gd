@@ -9,6 +9,7 @@ onready var towers = get_node("../Towers");
 
 const Base = preload("res://scenes/towers/base/base.tscn");
 const Gatling = preload("res://scenes/towers/Gatling.tscn");
+const Warp = preload("res://scenes/towers/Warp.tscn");
 const Laser = preload("res://scenes/towers/laser/laser.tscn");
 const Warp = preload("res://scenes/towers/warp/warp.tscn");
 
@@ -28,13 +29,11 @@ func _process(delta: float):
 		if placing_tower:
 			if Input.is_action_just_pressed("place_gatling"):
 				tower_type = Gatling;
-				ghost_tower = Gatling.instance();
 			elif Input.is_action_just_pressed("place_laser"):
 				tower_type = Laser;
-				ghost_tower = Laser.instance();
 			elif Input.is_action_just_pressed("place_warp"):
 				tower_type = Warp;
-				ghost_tower = Warp.instance();
+			ghost_tower = tower_type.instance();
 			add_child(ghost_tower);
 			ghost_tower.global_transform.basis = Basis();
 			ghost_tower.make_ghost();

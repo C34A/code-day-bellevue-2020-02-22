@@ -1,5 +1,7 @@
 extends Spatial
 
+var time_scale: float = 1;
+
 var spawn_bullets: bool = false
 var target_point: Vector2 = Vector2(0, 1)
 const COOLDOWN: float = 0.25
@@ -23,8 +25,9 @@ func _ready():
 	$AnimationPlayer.get_animation("default").set_loop(true)
 #	start_shooting();
 
-
 func _process(delta):
+	delta *= time_scale;
+	animation.playback_speed = time_scale;
 	if not disabled:
 		var pos: Vector2 = Vector2(global_transform.origin.x, global_transform.origin.z)
 		var target_angle: float = atan2((target_point - pos).x, (target_point - pos).y)
