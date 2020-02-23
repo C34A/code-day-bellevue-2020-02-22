@@ -1,8 +1,108 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=14 format=2]
 
 [ext_resource path="res://scripts/Towers.gd" type="Script" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
+[ext_resource path="res://resources/towers/warp/albedo.png" type="Texture" id=3]
 [ext_resource path="res://scripts/Enemies.gd" type="Script" id=5]
+
+[sub_resource type="VisualShaderNodeScalarConstant" id=9]
+
+[sub_resource type="VisualShaderNodeColorConstant" id=2]
+
+[sub_resource type="VisualShaderNodeScalarInterp" id=3]
+default_input_values = [ 0, 0.0, 1, 0.03, 2, 0.5 ]
+
+[sub_resource type="VisualShaderNodeInput" id=4]
+input_name = "uv"
+
+[sub_resource type="VisualShaderNodeVectorOp" id=5]
+default_input_values = [ 0, Vector3( 0, 0, 0 ), 1, Vector3( 3, 3, 3 ) ]
+operator = 2
+
+[sub_resource type="VisualShaderNodeTexture" id=8]
+texture = ExtResource( 3 )
+
+[sub_resource type="VisualShaderNodeScalarConstant" id=10]
+
+[sub_resource type="VisualShader" id=6]
+code = "shader_type spatial;
+uniform sampler2D tex_frg_8;
+
+
+void vertex() {
+// Output:0
+
+}
+
+void fragment() {
+// Color:4
+	vec3 n_out4p0;
+	float n_out4p1;
+	n_out4p0 = vec3(1.000000,1.000000,1.000000);
+	n_out4p1 = 1.000000;
+
+// Input:6
+	vec3 n_out6p0;
+	n_out6p0 = vec3(UV,0.0);
+
+// VectorOp:7
+	vec3 n_in7p1 = vec3(3.00000,3.00000,3.00000);
+	vec3 n_out7p0;
+	n_out7p0 = n_out6p0 * n_in7p1;
+
+// Texture:8
+	vec3 n_out8p0;
+	float n_out8p1;
+	vec4 tex_frg_8_read = texture( tex_frg_8 , n_out7p0.xy );
+	n_out8p0 = tex_frg_8_read.rgb;
+	n_out8p1 = tex_frg_8_read.a;
+
+// ScalarMix:5
+	float n_in5p0 = 0.00000;
+	float n_in5p1 = 0.03000;
+	float n_out5p0;
+	n_out5p0 = mix( n_in5p0 , n_in5p1 , dot(n_out8p0,vec3(0.333333,0.333333,0.333333)) );
+
+// Scalar:10
+	float n_out10p0;
+	n_out10p0 = 0.000000;
+
+// Scalar:9
+	float n_out9p0;
+	n_out9p0 = 0.000000;
+
+// Output:0
+	ALBEDO = n_out4p0;
+	ALPHA = n_out5p0;
+	METALLIC = n_out10p0;
+	ROUGHNESS = n_out9p0;
+
+}
+
+void light() {
+// Output:0
+
+}
+"
+graph_offset = Vector2( -272.2, 131.3 )
+nodes/fragment/4/node = SubResource( 2 )
+nodes/fragment/4/position = Vector2( 60, 140 )
+nodes/fragment/5/node = SubResource( 3 )
+nodes/fragment/5/position = Vector2( 140, 240 )
+nodes/fragment/6/node = SubResource( 4 )
+nodes/fragment/6/position = Vector2( -800, 300 )
+nodes/fragment/7/node = SubResource( 5 )
+nodes/fragment/7/position = Vector2( -620, 280 )
+nodes/fragment/8/node = SubResource( 8 )
+nodes/fragment/8/position = Vector2( -259, 285.25 )
+nodes/fragment/9/node = SubResource( 10 )
+nodes/fragment/9/position = Vector2( 160, 420 )
+nodes/fragment/10/node = SubResource( 9 )
+nodes/fragment/10/position = Vector2( 160, 360 )
+nodes/fragment/connections = PoolIntArray( 5, 0, 0, 1, 6, 0, 7, 0, 4, 0, 0, 0, 7, 0, 8, 0, 8, 0, 5, 2, 9, 0, 0, 3, 10, 0, 0, 2 )
+
+[sub_resource type="ShaderMaterial" id=7]
+shader = SubResource( 6 )
 
 [node name="World" type="Spatial"]
 
@@ -24,3 +124,10 @@ transform = Transform( 1, 0, 0, 0, 0.0159864, 0.999872, 0, -0.999872, 0.0159864,
 
 [node name="DirectionalLight2" type="DirectionalLight" parent="."]
 transform = Transform( -0.99689, -0.00125984, -0.0787969, 0.078807, -0.0159367, -0.996763, 0, -0.999872, 0.0159864, 0, 2.33959, 8.55439 )
+
+[node name="CSGBox" type="CSGBox" parent="."]
+transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0 )
+width = 80.0
+height = 0.1
+depth = 80.0
+material = SubResource( 7 )
