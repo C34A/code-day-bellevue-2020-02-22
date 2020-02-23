@@ -41,6 +41,9 @@ func _process(delta: float):
 			_update_ghost_position();
 		else:
 			ghost_tower.queue_free();
+	
+	var health = get_node("../Towers/base").health
+	$Control/Label.text = "Base Health:  " + String(round(health))
 
 func _input(event: InputEvent):
 	if event is InputEventMouseButton:
