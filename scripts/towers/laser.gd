@@ -11,7 +11,7 @@ var ghost: bool = false;
 var lifetime: float;
 var cast_yet: bool = false;
 
-var poof = preload("res://scenes/Particles_poof.tscn")
+#var poof = preload("res://scenes/Particles_poof.tscn")
 
 const COST = 150
 
