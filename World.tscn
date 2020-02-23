@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=2]
+[gd_scene load_steps=11 format=2]
 
 [ext_resource path="res://scripts/Towers.gd" type="Script" id=1]
 [ext_resource path="res://scripts/Player.gd" type="Script" id=2]
@@ -14,7 +14,10 @@ font_data = ExtResource( 4 )
 size = 30
 font_data = ExtResource( 4 )
 
-[sub_resource type="Shader" id=3]
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 4 )
+
+[sub_resource type="Shader" id=4]
 code = "shader_type spatial;
 uniform sampler2D tex_frg_8;
 
@@ -74,8 +77,8 @@ void light() {
 
 }"
 
-[sub_resource type="ShaderMaterial" id=4]
-shader = SubResource( 3 )
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
 shader_param/tex_frg_8 = ExtResource( 3 )
 
 [node name="World" type="Spatial"]
@@ -168,6 +171,7 @@ __meta__ = {
 [node name="Money" type="Label" parent="Player/Control"]
 margin_right = 40.0
 margin_bottom = 14.0
+custom_fonts/font = SubResource( 3 )
 text = "¥0"
 __meta__ = {
 "_edit_use_anchors_": false
@@ -184,5 +188,5 @@ transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.1, 0 )
 width = 500.0
 height = 0.8
 depth = 500.0
-material = SubResource( 4 )
+material = SubResource( 5 )
 [connection signal="pressed" from="Control2/Button" to="Player" method="_on_Button_pressed"]
