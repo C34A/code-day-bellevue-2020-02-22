@@ -40,10 +40,10 @@ surfaces/0 = {
 "vertex_count": 1452
 }
 
-[sub_resource type="VisualShaderNodeTexture" id=8]
+[sub_resource type="VisualShaderNodeTexture" id=3]
 texture = ExtResource( 2 )
 
-[sub_resource type="VisualShader" id=9]
+[sub_resource type="VisualShader" id=4]
 code = "shader_type spatial;
 uniform sampler2D tex_frg_2;
 
@@ -72,15 +72,15 @@ void light() {
 
 }
 "
-graph_offset = Vector2( -245, 64 )
-nodes/fragment/2/node = SubResource( 8 )
+graph_offset = Vector2( 0, 150 )
+nodes/fragment/2/node = SubResource( 3 )
 nodes/fragment/2/position = Vector2( -40, 140 )
 nodes/fragment/connections = PoolIntArray( 2, 0, 0, 0, 2, 1, 0, 1 )
 
-[sub_resource type="ShaderMaterial" id=3]
-shader = SubResource( 9 )
+[sub_resource type="ShaderMaterial" id=5]
+shader = SubResource( 4 )
 
-[sub_resource type="ArrayMesh" id=10]
+[sub_resource type="ArrayMesh" id=6]
 resource_name = "Icosphere.001"
 surfaces/0 = {
 "aabb": AABB( -0.380423, -0.210295, -0.4, 0.760847, 0.610295, 0.8 ),
@@ -96,13 +96,13 @@ surfaces/0 = {
 "vertex_count": 180
 }
 
-[sub_resource type="VisualShaderNodeColorConstant" id=4]
+[sub_resource type="VisualShaderNodeColorConstant" id=7]
 constant = Color( 0, 0.882812, 1, 1 )
 
-[sub_resource type="VisualShaderNodeScalarConstant" id=5]
+[sub_resource type="VisualShaderNodeScalarConstant" id=8]
 constant = 0.5
 
-[sub_resource type="VisualShader" id=6]
+[sub_resource type="VisualShader" id=9]
 code = "shader_type spatial;
 
 
@@ -135,14 +135,14 @@ void light() {
 }
 "
 graph_offset = Vector2( -198, 58 )
-nodes/fragment/2/node = SubResource( 4 )
+nodes/fragment/2/node = SubResource( 7 )
 nodes/fragment/2/position = Vector2( 200, 140 )
-nodes/fragment/3/node = SubResource( 5 )
+nodes/fragment/3/node = SubResource( 8 )
 nodes/fragment/3/position = Vector2( 180, 260 )
 nodes/fragment/connections = PoolIntArray( 2, 0, 0, 0, 3, 0, 0, 1 )
 
-[sub_resource type="ShaderMaterial" id=7]
-shader = SubResource( 6 )
+[sub_resource type="ShaderMaterial" id=10]
+shader = SubResource( 9 )
 
 [sub_resource type="ArrayMesh" id=11]
 resource_name = "Cube.001"
@@ -187,12 +187,12 @@ material/0 = null
 [node name="Galho Tex044" type="MeshInstance" parent="Arvore"]
 transform = Transform( -0.13127, 0.659957, 0.739746, -0.417432, 0.640028, -0.645069, -0.899177, -0.393472, 0.191471, 0.785339, 2.19281, -0.527679 )
 mesh = SubResource( 2 )
-material/0 = SubResource( 3 )
+material/0 = SubResource( 5 )
 
 [node name="Icosphere" type="MeshInstance" parent="."]
 transform = Transform( 1.48385, 0, 0, 0, 1.48385, 0, 0, 0, 1.48385, 0, 1.09904, 0 )
-mesh = SubResource( 10 )
-material/0 = SubResource( 7 )
+mesh = SubResource( 6 )
+material/0 = SubResource( 10 )
 
 [node name="tower" type="MeshInstance" parent="."]
 mesh = SubResource( 11 )
