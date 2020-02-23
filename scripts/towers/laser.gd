@@ -11,6 +11,8 @@ var ghost: bool = false;
 var lifetime: float;
 var cast_yet: bool = false;
 
+var poof = preload("res://scenes/Particles_poof.tscn")
+
 const COST = 150
 
 const RANGE = 1000.0
@@ -33,6 +35,11 @@ func _process(delta):
 	if not ghost:
 		lifetime -= time_scale;
 		if lifetime <= 0:
+#			var poof_inst = poof.instance()
+#			var t = global_transform
+#			get_parent().add_child(poof_inst)
+#			poof_inst.emitting = true
+#			poof_inst.global_transform = t
 			queue_free();
 	if not disabled:
 		var pos: Vector2 = Vector2(global_transform.origin.x, global_transform.origin.z)

@@ -11,6 +11,7 @@ const Base = preload("res://scenes/towers/base/base.tscn");
 const Gatling = preload("res://scenes/towers/Gatling.tscn");
 const Warp = preload("res://scenes/towers/Warp.tscn");
 const Laser = preload("res://scenes/towers/laser/laser.tscn");
+const enemy = preload("res://scenes/enemies/NormalEnemy.tscn")
 
 var mouse_down: bool = false;
 var placing_tower: bool = false;
@@ -91,6 +92,11 @@ func _process(delta: float):
 	else:
 		print("Game over");
 	$Control/Money.text = "¥" + str(Econ.money);
+#	if Input.is_action_just_pressed("ui_select"):
+#		var enem_inst = enemy.instance()
+##		get_node("../Enemies").add_child(enem_inst)
+##		enem_inst.global_transform = Transform(Basis(), Vector3(10, 0, 10))
+#		get_node("../Enemies").spawn_enemy(enem_inst, Vector3(10, 0, 10))
 
 func _input(event: InputEvent):
 	if event is InputEventMouseButton:
