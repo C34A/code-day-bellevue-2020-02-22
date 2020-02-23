@@ -1,0 +1,18 @@
+[gd_scene load_steps=3 format=2]
+
+[sub_resource type="SpatialMaterial" id=5]
+albedo_color = Color( 0.858824, 0.901961, 0.105882, 1 )
+
+[sub_resource type="CylinderShape" id=4]
+radius = 1.5
+
+[node name="NormalEnemy" type="KinematicBody"]
+
+[node name="CSGCylinder" type="CSGCylinder" parent="."]
+transform = Transform( 1, 0, 0, 0, -1.62921e-07, -1, 0, 1, -1.62921e-07, 0, 0, 0 )
+radius = 0.5
+height = 2.0
+material = SubResource( 5 )
+
+[node name="CollisionShape" type="CollisionShape" parent="."]
+shape = SubResource( 4 )
